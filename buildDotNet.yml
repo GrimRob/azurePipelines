@@ -1,4 +1,4 @@
-# This is a CICD which compiles a dotnet solution (with Nuget libraries for your own feed)
+# This is a CICD pipeline which compiles a dotnet solution (with Nuget libraries for your own feed)
 # replace yourSolution with your chosen solution name
 # replace yourFeedGuid with your feed guid (from Artifacts view.)
 
