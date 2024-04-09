@@ -1,3 +1,3 @@
 # azurePipelines
 
-This is a small copy YAML pipelines collection I have assembled
+This is a small YAML pipelines collection I have assembled
