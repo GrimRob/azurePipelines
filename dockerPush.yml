@@ -1,4 +1,4 @@
-# this is a CICD pipeline which builds and pushes a Docker image from Azure Devops Repo to a Github Container Registry
+# This is a CICD pipeline which builds and pushes a Docker image from Azure DevOps Repo to a GitHub Container Registry
 # replace dockerRegistryServiceConnection with your Service Connection (set up in Project Settings)
 # replace YourPackage with your chosen package name (which you can then pull from the Container Registry)
 
