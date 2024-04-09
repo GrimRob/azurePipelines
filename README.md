@@ -1,2 +1,3 @@
 # azurePipelines
-YAML pipelines collection I have assembled
+
+This is a small copy YAML pipelines collection I have assembled

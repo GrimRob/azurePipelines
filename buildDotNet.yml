@@ -1,0 +1,68 @@
+# this is a CICD which compiles a dotnet solution (with nuget libraries for your own feed)
+# replace yourSolution with your chosen solution name
+# replace yourFeedGuid with your feed guid (from Artifacts view.)
+
+trigger:
+  branches:  
+    include:
+      - main
+  paths:
+    exclude:
+      - '**/*.md'
+      - '**/*.yml'
+
+pool:
+  vmImage: windows-latest
+
+variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  solutionPath: 'yourSolution.sln'
+  vstsFeed: 'yourFeedGuid'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: DotNetCoreCLI@2
+  name: dotnetRestore
+  displayName: 'dotnet restore' 
+  inputs:
+    command: 'restore'
+    projects: '$(solutionPath)'
+    feedsToUse: 'select'
+    vstsFeed: '$(vstsFeed)'
+
+- task: DotNetCoreCLI@2
+  name: dotnetBuild
+  displayName: 'build solution'
+  inputs:
+    command: 'build'
+    projects: '$(solutionPath)'
+    feedsToUse: 'select'
+    vstsFeed: '$(vstsFeed)'
+
+- task: VSTest@2
+  enabled: false
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*Test*.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+     
+- task: DotNetCoreCLI@2
+  name: dotnetPublish
+  displayName: 'publish solution'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '$(solutionPath)'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+
+- task: PublishBuildArtifacts@1
+  name: artifactPublish
+  displayName: 'publish artifact'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
