@@ -1,6 +1,6 @@
 # This is a CICD pipeline which builds and pushes a Docker image from Azure DevOps Repo to a GitHub Container Registry
-# This version does the build and push seperately so you can you an Azure Artifact nuget feed
-# You will need to have a `FEED_ACCESSTOKEN` variable containing a Personal Access Token with permission to your Azure Artifact nuget feed account 
+# This version does the build and push separately so you can utlise an Azure Artifact Nuget feed
+# You will need to have a `FEED_ACCESSTOKEN` variable containing a Personal Access Token with permission to your Azure Artifact Nuget feed account 
 ## You will only need the Packaging Read permission
 # replace dockerRegistryServiceConnection with your Service Connection (set up in Project Settings)
 # replace YourPackage with your chosen package name (which you can then pull from the Container Registry)
@@ -27,7 +27,7 @@ steps:
     addToPath: true
 
 - task: Docker@2
-  displayName: Build
+  displayName: Build Docker Image
   inputs:
     command: build
     containerRegistry: 'dockerRegistryServiceConnection' 
